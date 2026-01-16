@@ -15,7 +15,6 @@ REQUIRED_PACKAGES=(
 )
 
 # === Functions ===
-
 is_package_installed() {
   dpkg -s "$1" &> /dev/null
 }
@@ -25,9 +24,9 @@ check_missing_packages() {
   echo "🔍 Checking for required packages..."
   for pkg in "${REQUIRED_PACKAGES[@]}"; do
     if is_package_installed "$pkg"; then
-      echo "✅ $pkg is already installed"
+      echo "[INSTALLED] $pkg"
     else
-      echo "❌ $pkg is missing"
+      echo "[MISSING] $pkg (about to install...)"
       MISSING+=("$pkg")
     fi
   done
@@ -45,7 +44,6 @@ install_missing_packages() {
 }
 
 # === Main ===
-
 main() {
   check_missing_packages
   install_missing_packages
